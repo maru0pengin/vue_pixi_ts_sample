@@ -12,7 +12,10 @@
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-0",
+    "pixi-filters": "^3.2.2",
+    "pixi-sound": "^3.0.5",
+    "pixi.js": "^5.3.7"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
