@@ -1,6 +1,6 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="play">
+    <h1>This is an play page</h1>
   </div>
   <main id="campus">
     <!-- ここにPixiの描画領域(Canvas)が入る -->
@@ -21,7 +21,7 @@ import * as PIXI_SOUND from "pixi-sound"; // node_modulesから PIXI_SOUNDをイ
     HelloWorld,
   },
 })
-export default class About extends Vue {
+export default class Play extends Vue {
   mounted() {
     console.log("aiueo");
     PIXI_SOUND.default.init();
