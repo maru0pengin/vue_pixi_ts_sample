@@ -5,12 +5,14 @@
   <main id="campus">
     <!-- ここにPixiの描画領域(Canvas)が入る -->
     test
+    <img alt="Vue logo" src="../assets/test.png" />
   </main>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { SceneManager } from "./scene_manager"; // シーン管理を行うクラスをインポート
 
 import * as PIXI from "pixi.js"; // node_modulesから PIXI.jsをインポート
 import * as PIXI_SOUND from "pixi-sound"; // node_modulesから PIXI_SOUNDをインポート
@@ -50,9 +52,49 @@ export default class Play extends Vue {
     // canvasの背景色
     app.renderer.backgroundColor = 0xdeb887;
 
+    PIXI.Loader.shared.add("../assets/test.png");
+
     // 一座標確認に使用
     app.view.addEventListener("pointermove", (ev) => {
       console.log(ev.clientX, ev.clientY);
+    });
+
+    console.log("test0");
+    // プリロード処理が終わったら呼び出されるイベント
+    PIXI.Loader.shared.load((loader, resources) => {
+      console.log("test1");
+      function createGameScene() {
+        // ゲーム用のシーンを生成
+        const gameScene = new PIXI.Container();
+        // ゲームシーンを画面に追加
+        console.log(resources);
+        app.stage.addChild(gameScene);
+
+        const image1 = new PIXI.Sprite(
+          resources["../assets/test.png"]?.texture
+        );
+        console.log(resources["../assets/test.png"]?.texture);
+        image1.x = 50;
+        image1.y = 70;
+        console.log("test2");
+        gameScene.addChild(image1); // ボールをシーンに追加
+
+        // テキストに関するパラメータを定義する(ここで定義した意外にもたくさんパラメータがある)
+        const textStyle = new PIXI.TextStyle({
+          fontFamily: "Myriad", // フォント
+          fontSize: 20, // フォントサイズ
+          fill: 0xffffff, // 色(16進数で定義する これはオレンジ色)
+        });
+        const description = new PIXI.Text(
+          "下のイラストの間違えをタップしよう！",
+          textStyle
+        ); //スコア表示テキスト
+        description.y = 290;
+        description.x = 15;
+        gameScene.addChild(description); // スコア表示テキストを画面に追加する
+      }
+      // 起動直後はゲームシーンを追加する
+      createGameScene();
     });
   }
 }
@@ -60,7 +102,6 @@ export default class Play extends Vue {
 
 <style>
 main {
-  margin-left: 100px;
   background-color: red;
 }
 </style>
